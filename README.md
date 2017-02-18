@@ -3,10 +3,8 @@ DNSMASQD Adblock Converter
 
 Use the amazing [StevenBlack/hosts](https://github.com/StevenBlack/hosts) Adblock Lists with [dnsmasqd](http://www.thekelleys.org.uk/dnsmasq/doc.html) on your router
 
-Usage
-----------------------------
-
-### Fetch the latest List ###
+Fetch the latest List
+------------------------------------
 
 To grab the latest list (default: adware + malware + fakenews) run the `update.sh` script
 
@@ -28,7 +26,8 @@ Saving to: ‘hosts.txt’
 32750 Hosts added to adblock.conf!
 ```
 
-### Ad the Adblock list to dnsmasq ###
+Configure dnsmasq
+------------------------------------
 
 **1.** Copy the `adblock.conf` file to a persistent location (e.g. `/etc` or `/jffs/etc` on WRT Routers)
 
@@ -42,7 +41,9 @@ conf-file=/etc/adblock.conf
 
 **4.** You're Ready!
 
-### Whitelist ###
+Whitelist
+------------------------------------
+
 Add a bunch of hostnames which **should not getting blocked**
 
 **Example**
@@ -52,5 +53,7 @@ analytics.google.com
 mydommain.tld
 ```
 
-## License ##
+License
+------------------------------------
+
 The Script is OpenSource and licensed under the Terms of [The MIT License (X11)](http://opensource.org/licenses/MIT) - your're welcome to contribute
