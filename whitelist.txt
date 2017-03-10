@@ -1,1 +1,5 @@
-analytics.google.com
+.analytics.google.com
+.google-analytics.com
+.piwik.org
+.twitter.com
+

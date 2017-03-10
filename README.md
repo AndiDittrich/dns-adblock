@@ -44,13 +44,15 @@ conf-file=/etc/adblock.conf
 Whitelist
 ------------------------------------
 
-Add a bunch of hostnames which **should not getting blocked**
+Add a bunch of hostnames which **should not getting blocked**. Wildcards are supported using leading dot
 
 **Example**
 
 ```
 analytics.google.com
+.twitter.com
 mydommain.tld
+.mywildcarddomain.tld
 ```
 
 License
