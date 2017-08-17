@@ -59,7 +59,7 @@ $dnsmasq = array_map(function($host){
 
 // unbound format
 $unbound = array_map(function($host){
-    return 'local-zone: "' . $host . '." redirect'."\n".'local-data: "' . $host . '." A 0.0.0.0';
+    return 'local-zone: "' . $host . '." redirect'."\n".'local-data: "' . $host . '. A 0.0.0.0"';
 }, $hosts);
 
 // save
