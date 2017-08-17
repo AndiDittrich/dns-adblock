@@ -2,4 +2,5 @@
 .google-analytics.com
 .piwik.org
 .twitter.com
+.youtube.com
 

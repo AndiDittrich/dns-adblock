@@ -52,13 +52,17 @@ foreach ($rawdata as $row){
     }
 }
 
-// add dnsmasq directive
-$hosts = array_map(function($host){
+// dnsmasq format
+$dnsmasq = array_map(function($host){
     return 'address=/' . $host . '/0.0.0.0';
 }, $hosts);
 
-// convert and save
-file_put_contents('adblock.conf', implode("\n", $hosts));
+// unbound format
+$unbound = array_map(function($host){
+    return 'local-zone: "' . $host . '." redirect'."\n".'local-data: "' . $host . '." A 0.0.0.0';
+}, $hosts);
 
-echo count($hosts), " Hosts added to adblock.conf!\n";
-
+// save
+file_put_contents('dnsmasq.adblock.conf', implode("\n", $dnsmasq));
+file_put_contents('unbound.adblock.conf', implode("\n", $unbound));
+echo count($hosts), " Hosts added to *.adblock.conf!\n";

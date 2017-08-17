@@ -29,12 +29,12 @@ Saving to: ‘hosts.txt’
 Configure dnsmasq
 ------------------------------------
 
-**1.** Copy the `adblock.conf` file to a persistent location (e.g. `/etc` or `/jffs/etc` on WRT Routers)
+**1.** Copy the `dnsmasq.adblock.conf` file to a persistent location (e.g. `/etc` or `/jffs/etc` on WRT Routers)
 
 **2.** Add the following directive to your **dnsmasq.conf** file
 
 ```conf
-conf-file=/etc/adblock.conf
+conf-file=/etc/dnsmasq.adblock.conf
 ```
 
 **3.** Restart dnsmasq
