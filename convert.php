@@ -37,32 +37,53 @@ function isWhitelisted($host){
     return false;
 }
 
-// output hosts
+// domains to hostname => [subdomain] array
 $hosts = array();
 
 // process data
 foreach ($rawdata as $row){
 
-    // valid line ? format IP hostname
-    if (preg_match('/^0\.0\.0\.0\s+(\w+\S+)\s*$/i', $row, $matches) === 1){
+    // valid line ? format <IP> <hostname>
+    if (preg_match('/^0\.0\.0\.0\s+(\w+\S+\.)(\w+\.[a-z]{2,10})\s*$/Ui', $row, $matches) === 1){
+
+        $fullDomain = $matches[1] . $matches[2];
+
         // host entry in whitelist ?
-        if (!isWhitelisted($matches[1])){
-            $hosts[] = $matches[1];
+        if (!isWhitelisted($fullDomain)){
+            // domain in list ?
+            if (!isset($hosts[$matches[2]])){
+                $hosts[$matches[2]] = array();
+            }
+
+            // push host
+            $hosts[$matches[2]][] = $matches[1];
         }
     }
 }
+echo count(array_keys($hosts)), " Domains total..\n";
 
-// dnsmasq format
-$dnsmasq = array_map(function($host){
-    return 'address=/' . $host . '/0.0.0.0';
-}, $hosts);
+// reduce array to dnsmasq format
+$dnsmasq = '';
+array_walk($hosts, function($hostnames, $domain) use (&$dnsmasq){
+    // generate local zone entry
+    foreach ($hostnames as $host){
+        $dnsmasq .= 'address=/' . $host . $domain . '/0.0.0.0'."\n";
+    }
+});
 
-// unbound format
-$unbound = array_map(function($host){
-    return 'local-zone: "' . $host . '." redirect'."\n".'local-data: "' . $host . '. A 0.0.0.0"';
-}, $hosts);
+// reduce array to unbound format
+$unbound = '';
+array_walk($hosts, function($hostnames, $domain) use (&$unbound){
+    // generate local zone entry
+    $z = 'local-zone: "' . $domain . '." redirect'."\n";
+    foreach ($hostnames as $host){
+        $z .= 'local-data: "' . $host .  $domain . '. A 0.0.0.0"'."\n";
+    }
+
+    // append result
+    $unbound .= $z;
+});
 
 // save
-file_put_contents('dnsmasq.adblock.conf', implode("\n", $dnsmasq));
-file_put_contents('unbound.adblock.conf', implode("\n", $unbound));
-echo count($hosts), " Hosts added to *.adblock.conf!\n";
+file_put_contents('dist/dnsmasq.adblock.conf', $dnsmasq);
+file_put_contents('dist/unbound.adblock.conf', $unbound);
