@@ -1,7 +1,7 @@
-DNSMASQD Adblock Converter
+DNSMASQD/UNBOUND Adblock Converter
 =============================
 
-Use the amazing [StevenBlack/hosts](https://github.com/StevenBlack/hosts) Adblock Lists with [dnsmasqd](http://www.thekelleys.org.uk/dnsmasq/doc.html) on your router
+Use the amazing [StevenBlack/hosts](https://github.com/StevenBlack/hosts) Adblock Lists with [dnsmasqd](http://www.thekelleys.org.uk/dnsmasq/doc.html) or [unbound](https://www.unbound.net/) on your router
 
 Fetch the latest List
 ------------------------------------
@@ -21,15 +21,15 @@ Saving to: ‘hosts.txt’
 
 2017-02-18 09:09:58 (2.38 MB/s) - ‘hosts.txt’ saved [1021501/1021501]
 
-35093 Entries processed..
-1 Whitelist Hosts processed..
-32750 Hosts added to adblock.conf!
+44006 Entries processed..
+5 Whitelist Hosts processed..
+10493 Domains total..
 ```
 
 Configure dnsmasq
 ------------------------------------
 
-**1.** Copy the `dnsmasq.adblock.conf` file to a persistent location (e.g. `/etc` or `/jffs/etc` on WRT Routers)
+**1.** Copy the `dist/dnsmasq.adblock.conf` file to a persistent location (e.g. `/etc` or `/jffs/etc` on WRT Routers)
 
 **2.** Add the following directive to your **dnsmasq.conf** file
 
@@ -40,6 +40,24 @@ conf-file=/etc/dnsmasq.adblock.conf
 **3.** Restart dnsmasq
 
 **4.** You're Ready!
+
+Configure unbound
+------------------------------------
+
+**1.** Copy the `dist/unbound.adblock.conf` file to a persistent location (e.g. `/etc` or `/jffs/etc` on WRT Routers)
+
+**2.** Add the following directive to your **unbound.conf** file into `server` section
+
+```conf
+server:
+     ...
+     include: /etc/unbound.adblock.conf
+```
+
+**3.** Restart unbound
+
+**4.** You're Ready!
+
 
 Whitelist
 ------------------------------------
