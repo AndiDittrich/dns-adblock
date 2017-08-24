@@ -75,7 +75,7 @@ array_walk($hosts, function($hostnames, $domain) use (&$dnsmasq){
 $unbound = '';
 array_walk($hosts, function($hostnames, $domain) use (&$unbound){
     // generate local zone entry
-    $z = 'local-zone: "' . $domain . '." static'."\n";
+    $z = 'local-zone: "' . $domain . '." typetransparent'."\n";
     foreach ($hostnames as $host){
         $z .= 'local-data: "' . $host .  $domain . '. A 0.0.0.0"'."\n";
     }
