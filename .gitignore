@@ -7,3 +7,5 @@ gfx/*
 PublicHtml/*
 hosts.txt
 dist/*
+build.xml
+.credentials/*
